@@ -83,8 +83,7 @@ namespace DynamicFormBuilder.Repositories
                     Id = rdr.GetInt32(0),
                     Title = rdr.GetString(1),
                     CreatedAt = rdr.GetDateTime(2),
-                    // Optional: map UpdatedAt if you extend FormListItemVM
-                    // UpdatedAt = rdr.IsDBNull(3) ? null : rdr.GetDateTime(3)
+                 
                 });
             }
 
