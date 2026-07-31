@@ -45,12 +45,12 @@ jobs:
         cd DynamicFormBuilder/DynamicFormBuilder
         dotnet build --configuration Release --no-restore
 
-    - name: Run Test and Generate Result
+    - name: Run Unit Test
+  
       run: |
-        cd DynamicFormBuilder/DynamicFormBuilder
-        dotnet test \
+  
+        dotnet test DynamicFormBuilder.Tests/DynamicFormBuilder.Tests.csproj \
         --configuration Release \
-        --no-build \
         --logger "trx;LogFileName=test-result.trx" \
         --results-directory ./TestResults
 
