@@ -1,1 +1,87 @@
+name: DynamicFormBuilder CI/CD
 
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+
+jobs:
+
+  test:
+
+    name: Test Application
+
+    runs-on: self-hosted
+
+
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+
+    - name: Restore Packages
+      run: |
+        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        dotnet restore
+
+
+    - name: Build Application
+      run: |
+        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        dotnet build --configuration Release --no-restore
+
+
+    - name: Run Tests
+      run: |
+        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        dotnet test --configuration Release --no-build
+
+
+
+  deploy:
+
+    name: Deploy Application
+
+    needs: test
+
+    runs-on: self-hosted
+
+
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+
+    - name: Publish Application
+      run: |
+        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        dotnet publish \
+        --configuration Release \
+        --output /var/www/dynamicformbuilder
+
+
+    - name: Restart Application Service
+      run: |
+        sudo systemctl restart dynamicbuilder.service
+
+
+    - name: Check Application Status
+      run: |
+        sudo systemctl status dynamicbuilder.service --no-pager
