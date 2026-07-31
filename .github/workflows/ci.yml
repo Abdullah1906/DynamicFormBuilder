@@ -45,13 +45,21 @@ jobs:
         cd DynamicFormBuilder/DynamicFormBuilder
         dotnet build --configuration Release --no-restore
 
-
-    - name: Run Tests
+    - name: Run Test and Generate Result
       run: |
         cd DynamicFormBuilder/DynamicFormBuilder
-        dotnet test --configuration Release --no-build
+        dotnet test \
+        --configuration Release \
+        --no-build \
+        --logger "trx;LogFileName=test-result.trx" \
+        --results-directory ./TestResults
 
 
+    - name: Upload Test Result Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: dynamicformbuilder-test-result
+        path: DynamicFormBuilder/DynamicFormBuilder/TestResults
 
   deploy:
 
@@ -63,7 +71,17 @@ jobs:
 
 
     steps:
+    - name: Download Test Result
+      uses: actions/download-artifact@v4
+      with:
+        name: dynamicformbuilder-test-result
+        path: ./test-result
 
+
+    - name: Check Test Result
+      run: |
+        ls -la ./test-result
+        
     - name: Checkout Code
       uses: actions/checkout@v4
 
