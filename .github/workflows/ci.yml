@@ -71,16 +71,17 @@ jobs:
 
 
     steps:
-    - name: Download Test Result
-      uses: actions/download-artifact@v4
+    - name: Upload Test Result
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: dynamicformbuilder-test-result
-        path: ./test-result
-
-
-    - name: Check Test Result
+          name: dynamicformbuilder-test-result
+          path: DynamicFormBuilder/DynamicFormBuilder/TestResults
+      
+    - name: Check Test Result Folder
+      if: always()
       run: |
-        ls -la ./test-result
+        ls -la DynamicFormBuilder/DynamicFormBuilder/TestResults
         
     - name: Checkout Code
       uses: actions/checkout@v4
