@@ -16,17 +16,17 @@ jobs:
 
     runs-on: self-hosted
 
-
     steps:
 
     - name: Checkout Code
       uses: actions/checkout@v4
-      
+
+
     - name: Check Project Structure
       run: |
         pwd
-        ls -la
         find . -name "*.csproj"
+
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -53,7 +53,7 @@ jobs:
 
 
 
- deploy:
+  deploy:
 
     name: Deploy Application
 
@@ -88,10 +88,5 @@ jobs:
 
 
     - name: Verify Application
-      run: |
-        sudo systemctl status dynamicbuilder.service --no-pager
-
-
-    - name: Check Application Status
       run: |
         sudo systemctl status dynamicbuilder.service --no-pager
