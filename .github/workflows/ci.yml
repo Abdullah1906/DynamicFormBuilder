@@ -46,20 +46,28 @@ jobs:
         dotnet build --configuration Release --no-restore
 
     - name: Run Unit Test
-  
+
       run: |
-  
+
         dotnet test DynamicFormBuilder.Tests/DynamicFormBuilder.Tests.csproj \
         --configuration Release \
         --logger "trx;LogFileName=test-result.trx" \
         --results-directory ./TestResults
 
 
-    - name: Upload Test Result Artifact
+
+
+    - name: Upload Test Result
+
+      if: always()
+
       uses: actions/upload-artifact@v4
+
       with:
+
         name: dynamicformbuilder-test-result
-        path: DynamicFormBuilder/DynamicFormBuilder/TestResults
+
+        path: ./TestResults
 
   deploy:
 
