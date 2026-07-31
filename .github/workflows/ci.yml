@@ -53,7 +53,7 @@ jobs:
 
 
 
-  deploy:
+ deploy:
 
     name: Deploy Application
 
@@ -76,15 +76,20 @@ jobs:
 
     - name: Publish Application
       run: |
-        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        cd DynamicFormBuilder/DynamicFormBuilder
         dotnet publish \
         --configuration Release \
         --output /var/www/dynamicformbuilder
 
 
-    - name: Restart Application Service
+    - name: Restart Application
       run: |
         sudo systemctl restart dynamicbuilder.service
+
+
+    - name: Verify Application
+      run: |
+        sudo systemctl status dynamicbuilder.service --no-pager
 
 
     - name: Check Application Status
