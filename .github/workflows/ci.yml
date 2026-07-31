@@ -36,19 +36,19 @@ jobs:
 
     - name: Restore Packages
       run: |
-        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        cd DynamicFormBuilder/DynamicFormBuilder
         dotnet restore
 
 
     - name: Build Application
       run: |
-        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        cd DynamicFormBuilder/DynamicFormBuilder
         dotnet build --configuration Release --no-restore
 
 
     - name: Run Tests
       run: |
-        cd DynamicFormBuilder/DynamicFormBuilder/DynamicFormBuilder
+        cd DynamicFormBuilder/DynamicFormBuilder
         dotnet test --configuration Release --no-build
 
 
