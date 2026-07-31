@@ -79,6 +79,10 @@ jobs:
 
 
     steps:
+    - name: Clean Test Folder
+      run: |
+        sudo rm -rf /home/ubuntu/test
+        mkdir -p /home/ubuntu/test
     - name: Download Test Result
       uses: actions/download-artifact@v4
       with:
